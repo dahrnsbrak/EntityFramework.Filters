@@ -14,10 +14,14 @@
                 var queryCommand = interceptionContext.Result as DbQueryCommandTree;
                 if (queryCommand != null)
                 {
-                    var newQuery =
-                        queryCommand.Query.Accept(new FilterQueryVisitor(interceptionContext.DbContexts.First()));
-                    interceptionContext.Result = new DbQueryCommandTree(
-                        queryCommand.MetadataWorkspace, queryCommand.DataSpace, newQuery);
+                    var context = interceptionContext.DbContexts.FirstOrDefault();
+                    if (context != null)
+                    {
+                        var newQuery =
+                            queryCommand.Query.Accept(new FilterQueryVisitor(interceptionContext.DbContexts.First()));
+                        interceptionContext.Result = new DbQueryCommandTree(
+                            queryCommand.MetadataWorkspace, queryCommand.DataSpace, newQuery);
+                    }
                 }
             }
         }
