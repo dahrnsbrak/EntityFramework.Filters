@@ -18,7 +18,7 @@
                     if (context != null)
                     {
                         var newQuery =
-                            queryCommand.Query.Accept(new FilterQueryVisitor(interceptionContext.DbContexts.First()));
+                            queryCommand.Query.Accept(new FilterQueryVisitor(context));
                         interceptionContext.Result = new DbQueryCommandTree(
                             queryCommand.MetadataWorkspace, queryCommand.DataSpace, newQuery);
                     }
